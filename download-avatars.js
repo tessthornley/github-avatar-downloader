@@ -2,9 +2,8 @@ var request = require('request');
 var secrets = require('./secrets.js');
 var fs = require('fs');
 
-console.log('Welcome to the GitHub Avatar Downloader!');
-var repoOwner = process.argv[2]
-var repoName = process.argv[3]
+var repoOwner = process.argv[2];
+var repoName = process.argv[3];
 // function to get user info
 function getRepoContributors(repoOwner, repoName, cb) {
   var options = {
@@ -25,15 +24,14 @@ getRepoContributors(repoOwner, repoName, function(err, result) {
   
   if (!repoOwner || !repoName) {
     throw err;
-  }
-  
+  };
+
   data.forEach (function(item){
-    downloadImageByURL(item.avatar_url, './avatars/' + item.login + '.jpg')
+    downloadImageByURL(item.avatar_url, './avatars/' + item.login + '.jpg');
   });
-  console.log("Errors:", err);
 });
 
-// function to download URL
+// note I created an avatar folder via the command line
 function downloadImageByURL(url, filePath) {
   request.get(url)
   .on('error', function(err){
@@ -42,8 +40,8 @@ function downloadImageByURL(url, filePath) {
   .on('response', function(response){
     console.log('Downloading image...');
     console.log('Response Messages ------------ ', response.statusMessage);
-    console.log('Status Type ---------- ', response.headers['content-type'])
+    console.log('Status Type ---------- ', response.headers['content-type']);
     console.log('Download complete.'); 
   })
   .pipe(fs.createWriteStream(filePath));
-}
+};
