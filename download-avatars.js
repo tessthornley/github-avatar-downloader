@@ -4,7 +4,8 @@ var fs = require('fs');
 
 var repoOwner = process.argv[2];
 var repoName = process.argv[3];
-// function to get user info
+
+// function to get user info via GitHub
 function getRepoContributors(repoOwner, repoName, cb) {
   var options = {
     url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",
@@ -19,6 +20,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
   });
 }
 
+// function call as well as callback function code
 getRepoContributors(repoOwner, repoName, function(err, result) {
   var data = JSON.parse(result);
   
@@ -31,7 +33,8 @@ getRepoContributors(repoOwner, repoName, function(err, result) {
   });
 });
 
-// note I created an avatar folder via the command line
+// function to download avatars and save them
+// note I created an avatar folder via the command line to add the avatars
 function downloadImageByURL(url, filePath) {
   request.get(url)
   .on('error', function(err){
