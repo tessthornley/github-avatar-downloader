@@ -22,7 +22,11 @@ function getRepoContributors(repoOwner, repoName, cb) {
 
 getRepoContributors(repoOwner, repoName, function(err, result) {
   var data = JSON.parse(result);
-
+  
+  if (!repoOwner || !repoName) {
+    throw err;
+  }
+  
   data.forEach (function(item){
     downloadImageByURL(item.avatar_url, './avatars/' + item.login + '.jpg')
   });
